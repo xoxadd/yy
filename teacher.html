@@ -1,52 +1,3 @@
-<?php
-session_start();
-require_once 'config.php'; // Database connection
-
-// Check if logged in as teacher
-if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'teacher') {
-    header("Location: login.php?role=teacher");
-    exit();
-}
-
-// Messages
-$error = "";
-$success = "";
-
-// Handle adding student
-if (isset($_POST['add_student'])) {
-    $lrn = trim($_POST['lrn']);
-
-    if (!$lrn) {
-        $error = "Please enter LRN!";
-    } else {
-        // Check if student already exists
-        $stmt = $conn->prepare("SELECT * FROM users WHERE username=? AND role='student'");
-        $stmt->bind_param("s", $lrn);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows > 0) {
-            $error = "Student with this LRN already exists!";
-        } else {
-            $default_password = password_hash("student123", PASSWORD_DEFAULT);
-            $role = "student";
-            $status = "active";
-
-            $stmt = $conn->prepare("INSERT INTO users (username, password, role, status) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $lrn, $default_password, $role, $status);
-            if ($stmt->execute()) {
-                $success = "Student added successfully! Default password: student123";
-            } else {
-                $error = "Error adding student!";
-            }
-        }
-    }
-}
-
-// Fetch all students
-$students = $conn->query("SELECT * FROM users WHERE role='student' ORDER BY id ASC");
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,3 +138,4 @@ options:{responsive:true,plugins:{legend:{display:false}}}
 
 </body>
 </html>
+
