@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>School Election System</title>
+
+<style>
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    /* Soft purple gradient background matching your screenshot */
+    background: linear-gradient(135deg, #d9d5f8, #b8a7f8);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 30px 15px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 1400px;
+    background: #f9f8ff;
+    border-radius: 25px;
+    padding: 30px 40px 40px;
+    box-shadow: 0 8px 30px rgba(150, 130, 255, 0.25);
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .header h1 {
+    font-weight: 700;
+    color: #5b3cc4;
+    font-size: 28px;
+    margin: 0;
+  }
+
+  .header p {
+    color: #7e6ede;
+    font-size: 15px;
+    margin-top: 6px;
+  }
+
+  .logout {
+    background-color: #7e6ede;
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 28px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(126, 110, 222, 0.5);
+    transition: background-color 0.3s ease;
+  }
+
+  .logout:hover {
+    background-color: #5b3cc4;
+  }
+
+  /* Sections */
+  .section {
+    margin-bottom: 50px;
+  }
+
+  .section h2 {
+    color: #5b3cc4;
+    font-weight: 700;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+
+  .vote-count {
+    color: #7e6ede;
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+
+  /* Grid */
+  .grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  /* Candidate Card */
+  .card {
+    background: white;
+    border-radius: 20px;
+    padding: 18px 12px 24px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(150, 130, 255, 0.2);
+    position: relative;
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+
+  .card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 30px rgba(126, 110, 222, 0.45);
+  }
+
+  .card img {
+    width: 100%;
+    height: 140px;
+    border-radius: 15px;
+    object-fit: cover;
+    margin-bottom: 12px;
+  }
+
+  .card h3 {
+    font-size: 15px;
+    color: #4b3ca7;
+    margin: 0;
+    font-weight: 600;
+  }
+
+  /* Selected Check Mark */
+  .check {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background-color: #7e6ede;
+    color: white;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 26px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .card.selected {
+    outline: 3px solid #7e6ede;
+  }
+
+  .card.selected .check {
+    display: flex;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: right;
+  }
+
+  .submit {
+    background: #7e6ede;
+    color: white;
+    border: none;
+    padding: 16px 38px;
+    border-radius: 28px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 6px 18px rgba(126, 110, 222, 0.6);
+    transition: background-color 0.3s ease;
+  }
+
+  .submit:hover {
+    background-color: #5b3cc4;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1024px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    }
+  }
+
+  @media (max-width: 768px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    .logout {
+      margin-top: 12px;
+      align-self: stretch;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: repeat(auto-fill, minmax(100%, 1fr));
+    }
+
+    .submit {
+      width: 100%;
+    }
+  }
+</style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div>
+        <h1>School Election 2026</h1>
+        <p>Select <strong>ONE</strong> candidate per position</p>
+      </div>
+      <button class="logout" onclick="location.href='index.html'">Log Out</button>
+    </div>
+
+    <div id="elections"></div>
+
+    <div class="footer">
+      <button class="submit">Review & Submit Vote</button>
+    </div>
+  </div>
+
+  <script>
+    const POSITIONS = [
+      "President",
+      "Vice President",
+      "Secretary",
+      "Auditor",
+      "Treasurer",
+      "PIO",
+      "PO",
+      "Sergeant-at-Arms",
+      "Escort",
+      "Muse"
+    ];
+
+    const CANDIDATES_PER_POSITION = 5;
+    const elections = document.getElementById("elections");
+
+    POSITIONS.forEach((position) => {
+      const section = document.createElement("div");
+      section.className = "section";
+
+      section.innerHTML = `
+        <h2>${position}</h2>
+        <div class="vote-count">Votes used: <span>0</span> / 1</div>
+        <div class="grid"></div>
+      `;
+
+      const grid = section.querySelector(".grid");
+      const counter = section.querySelector("span");
+
+      for (let i = 1; i <= CANDIDATES_PER_POSITION; i++) {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img src="https://i.pravatar.cc/300?img=${Math.floor(
+            Math.random() * 70 + 1
+          )}">
+          <h3>${position} Candidate ${i}</h3>
+          <div class="check">✓</div>
+        `;
+
+        card.onclick = () => {
+          const selected = grid.querySelectorAll(".card.selected");
+          if (!card.classList.contains("selected") && selected.length >= 1) {
+            selected[0].classList.remove("selected");
+          }
+          card.classList.toggle("selected");
+          counter.textContent = grid.querySelectorAll(".card.selected").length;
+        };
+
+        grid.appendChild(card);
+      }
+
+      elections.appendChild(section);
+    });
+
+    function logout() {
+      if (confirm("Are you sure you want to log out?")) {
+        location.reload();
+      }
+    }
+  </script>
+</body>
+</html>

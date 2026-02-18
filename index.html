@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title> NFHS Online Voting</title>
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- FONT AWESOME ICONS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+:root {
+  --primary: #a78bfa;
+  --primary-dark: #8b5cf6;
+  --text-main: #2e2a3b;
+  --text-muted: #6b6680;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* BACKGROUND */
+.hero {
+  min-height: 100vh;
+  background:
+    linear-gradient(rgba(237,233,254,0.85), rgba(196,181,253,0.85)),
+    url("background.jpg");
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* MAIN CONTAINER */
+.main-box {
+  background: rgba(255,255,255,0.9);
+  backdrop-filter: blur(10px);
+  border-radius: 25px;
+  padding: 50px;
+  width: 90%;
+  max-width: 1100px;
+  box-shadow: 0 20px 40px rgba(167,139,250,0.3);
+  text-align: center;
+}
+
+h1 {
+  color: #5b21b6;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  margin-bottom: 40px;
+}
+
+/* CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+}
+
+.card {
+  background: white;
+  border-radius: 22px;
+  padding: 35px 30px;
+  box-shadow: 0 10px 25px rgba(167,139,250,0.15);
+  transition: 0.25s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card.student {
+  border: 2px solid #c4b5fd;
+  background: linear-gradient(180deg, #ffffff, #f5f3ff);
+}
+
+/* ICON STYLE */
+.icon {
+  font-size: 40px;
+  color: var(--primary);
+  margin-bottom: 15px;
+}
+
+.card h2 {
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.card p {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* BUTTON */
+button {
+  margin-top: 22px;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 14px;
+  padding: 12px 32px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+button:hover {
+  background: var(--primary-dark);
+  transform: scale(1.05);
+}
+</style>
+</head>
+
+<body>
+<div class="hero">
+  <div class="main-box">
+
+    <h1>North Fairview Online Voting</h1>
+    <p class="subtitle">Please select your access level to continue</p>
+
+    <div class="cards">
+
+      <div class="card student">
+        <div class="icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <h2>Student</h2>
+        <p>Cast your vote securely and anonymously.</p>
+      <button onclick="location.href='student.html">Enter</button>
+    
+</button>
+
+      </div>
+
+      <div class="card">
+        <div class="icon">
+          <i class="fa-solid fa-chalkboard-user"></i>
+        </div>
+        <h2>Teacher</h2>
+        <p>Monitor and validate election progress.</p>
+<button onclick="location.href='teacher.html'">Enter</button>
+    
+</button>
+      </div>
+
+      <div class="card">
+        <div class="icon">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+        <h2>Admin</h2>
+        <p>Manage candidates, voters, and results.</p>
+<button onclick="location.href='admin.html'">Enter</button>
+    
+</button>
+      </div>
+
+
+
+    </div>
+  </div>
+</div>
+</body>
+</html>
